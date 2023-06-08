@@ -1,17 +1,12 @@
-import { ReactNode } from "react";
 import * as C from "../../components/index";
 import styled from "styled-components";
 
-interface PropsType {
-  children: ReactNode;
-}
-
-export default function MainPage({ children }: PropsType) {
+export default function MainPage() {
   return (
     <Container>
       <C.Header />
-      <C.Main />
-      <PostSection>{children}</PostSection>
+      <C.Menu />
+      <C.PostSection></C.PostSection>
     </Container>
   );
 }
@@ -22,13 +17,4 @@ const Container = styled.div`
   gap: 35px;
   margin-bottom: 30px;
   align-items: center;
-`;
-
-const PostSection = styled.div`
-  height: max-content;
-  width: 91vw;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 35px;
 `;

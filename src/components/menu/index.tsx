@@ -6,7 +6,7 @@ import styled from "styled-components";
 import * as C from "style";
 import { keyframes } from "styled-components";
 
-export default function Main() {
+export default function Menu() {
   const theme = useRecoilValue(mood);
   const [selectedOption, setSelectedOption] = useRecoilState(selectedOptions);
 
@@ -16,7 +16,7 @@ export default function Main() {
   return (
     <Container>
       <TopMenu>
-        <GrowpOptions>
+        <GroupOptions>
           <Link to="/">
             <ArrangeOptions
               selected={selectedOption}
@@ -48,8 +48,8 @@ export default function Main() {
             <SelectionTag mood={theme}>이번 주</SelectionTag>
           )}
 
-          <SelectedLine mood={theme} selected={selectedOption}></SelectedLine>
-        </GrowpOptions>
+          <SelectedLine mood={theme} selected={selectedOption} />
+        </GroupOptions>
         <SelectionTag mood={theme}>wef</SelectionTag>
       </TopMenu>
     </Container>
@@ -74,7 +74,7 @@ const TopMenu = styled.div`
   justify-content: space-between;
 `;
 
-const GrowpOptions = styled.div`
+const GroupOptions = styled.div`
   width: max-content;
   height: min-content;
 
@@ -131,7 +131,7 @@ const SelectedLine = styled.div<{
   position: absolute;
   bottom: 0px;
 
-  background-color: ${(props) => C[props.mood].LineColor2};
+  background-color: ${(props) => C[props.mood].TextColor1};
 
   animation: ${(props) =>
     props.selected
