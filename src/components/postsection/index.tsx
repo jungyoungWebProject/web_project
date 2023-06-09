@@ -4,7 +4,12 @@ import * as C from "../../components/index";
 export default function PostSection() {
   return (
     <Container>
-      <C.Post></C.Post>
+      <C.Post />
+      <C.Post />
+      <C.Post />
+      <C.Post />
+      <C.Post />
+      <C.Post />
     </Container>
   );
 }

@@ -26,9 +26,6 @@ const Body = styled.body<{ mood: themeType }>`
   height: max-content;
   width: 100vw;
 
-  transition-timing-function: ease-out;
-  transition-duration: 0.1s;
-
   box-sizing: border-box;
 
   display: flex;

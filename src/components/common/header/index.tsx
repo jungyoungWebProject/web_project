@@ -37,9 +37,6 @@ const Container = styled.div<{ mood: themeType }>`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-
-  transition-timing-function: ease-out;
-  transition-duration: 0.1s;
 `;
 
 const HeaderContainer = styled.div`

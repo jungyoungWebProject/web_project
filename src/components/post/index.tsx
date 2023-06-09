@@ -26,7 +26,7 @@ export default function Post() {
 }
 
 const Container = styled.div<{ mood: themeType }>`
-  width: max-content;
+  width: 20rem;
   height: max-content;
   background-color: ${(props) => C[props.mood].BgColor};
 
