@@ -1,29 +1,12 @@
-import { useRecoilState } from "recoil";
-import { mood, themeType, loginData } from "state/index";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { mood, themeType, showLoginPopup, loginData } from "state/index";
 import styled from "styled-components";
 import * as C from "style";
-import { auth } from "../../../firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function Header() {
-  const [postData, setPostData] = useRecoilState(loginData);
+  const postData = useRecoilValue(loginData);
+  const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [theme, setTheme] = useRecoilState(mood);
-
-  function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((data) => {
-        setPostData(data);
-        console.log(postData);
-      })
-      .catch((err) => {
-        console.log("굿조맛탱탱탱탱볼");
-      });
-  }
-
-  const showData = () => {
-    console.log(postData);
-  };
 
   return (
     <>
@@ -40,7 +23,12 @@ export default function Header() {
             ></ThemeBtn>
             <SearchBtn mood={theme}></SearchBtn>
             {!postData && (
-              <LoginBtn mood={theme} onClick={handleGoogleLogin}>
+              <LoginBtn
+                mood={theme}
+                onClick={() => {
+                  setShowLoginPopup(!ShowLoginPopup);
+                }}
+              >
                 로그인
               </LoginBtn>
             )}

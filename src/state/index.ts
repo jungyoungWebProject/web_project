@@ -18,3 +18,8 @@ export const loginData = atom<UserCredential | null>({
   key: `loginData/${v1()}`,
   default: null,
 });
+
+export const showLoginPopup = atom<boolean>({
+  key: `showLoginPopup${v1()}`,
+  default: false,
+});

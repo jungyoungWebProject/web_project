@@ -2,13 +2,12 @@ import * as C from "../../components/index";
 import styled from "styled-components";
 
 export default function MainPage() {
-
-
   return (
     <Container>
       <C.Header />
       <C.Menu />
       <C.PostSection></C.PostSection>
+      <C.LoginPopup></C.LoginPopup>
     </Container>
   );
 }
