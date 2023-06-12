@@ -1,5 +1,6 @@
 export const DarkTheme = {
   BgColor: "#121212",
+  LoginBgColor:"rgba(0,0,0,0.8)",
   TextColor1: "#F8F9FA",
   TextColor2: "#ACACAC",
   BtnUrl1: "images/header/DarkMode.png",
@@ -8,10 +9,12 @@ export const DarkTheme = {
   LineColor1: "#2A2A2A",
   LineColor2: "#343A40",
   ShadowColor: "#191919",
+
 };
 
 export const LightTheme = {
   BgColor: "#F8F9FA",
+  LoginBgColor:"rgba(255,255,255,0.8)",
   TextColor1: "#121212",
   TextColor2: "#595959",
   BtnUrl1: "images/header/LightMode.png",

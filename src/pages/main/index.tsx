@@ -3,12 +3,14 @@ import styled from "styled-components";
 
 export default function MainPage() {
   return (
-    <Container>
-      <C.Header />
-      <C.Menu />
-      <C.PostSection></C.PostSection>
-      <C.LoginPopup></C.LoginPopup>
-    </Container>
+    <>
+      <Container>
+        <C.Header />
+        <C.Menu />
+        <C.PostSection></C.PostSection>
+      </Container>
+      <C.LoginPopup />
+    </>
   );
 }
 
