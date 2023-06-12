@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
 
-export default function Post() {
+export default function Post(props: object) {
   const theme = useRecoilValue(mood);
 
   return (
@@ -35,6 +35,7 @@ const Container = styled.div<{ mood: themeType }>`
   flex-wrap: wrap;
   color: ${(props) => C[props.mood].TextColor2};
   background-color: ${(props) => C[props.mood].BtnColor1};
+  box-shadow: 0px 5px 15px ${(props) => C[props.mood].ShadowColor};
 
   border-radius: 5px;
 
@@ -46,6 +47,7 @@ const Container = styled.div<{ mood: themeType }>`
   &:hover {
     margin: -5px 0px 0px 0px;
     box-shadow: 0px 10px 10px ${(props) => C[props.mood].ShadowColor};
+    cursor: pointer;
   }
 `;
 
