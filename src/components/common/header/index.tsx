@@ -1,10 +1,29 @@
 import { useRecoilState } from "recoil";
-import { mood, themeType } from "state/index";
+import { mood, themeType, loginData } from "state/index";
 import styled from "styled-components";
 import * as C from "style";
+import { auth } from "../../../firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function Header() {
+  const [postData, setPostData] = useRecoilState(loginData);
   const [theme, setTheme] = useRecoilState(mood);
+
+  function handleGoogleLogin() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        setPostData(data);
+        console.log(postData);
+      })
+      .catch((err) => {
+        console.log("굿조맛탱탱탱탱볼");
+      });
+  }
+
+  const showData = () => {
+    console.log(postData);
+  };
 
   return (
     <>
@@ -20,6 +39,11 @@ export default function Header() {
               }}
             ></ThemeBtn>
             <SearchBtn mood={theme}></SearchBtn>
+            {!postData && (
+              <LoginBtn mood={theme} onClick={handleGoogleLogin}>
+                로그인
+              </LoginBtn>
+            )}
           </HeaderContainerOptions>
         </HeaderContainer>
       </Container>
@@ -102,6 +126,27 @@ const SearchBtn = styled.div<{ mood: themeType }>`
   background-position: center;
   background-size: 20px;
   background-repeat: no-repeat;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const LoginBtn = styled.div<{ mood: themeType }>`
+  width: 85px;
+  height: 32.5px;
+
+  display: flex;
+
+  border-radius: 17.5px;
+  font-size: 1rem;
+  font-weight: 600;
+
+  background-color: ${(props) => C[props.mood].TextColor1};
+  color: ${(props) => C[props.mood].BgColor};
+
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     cursor: pointer;

@@ -3,14 +3,15 @@ import { useRecoilValue } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
 
-export default function Post(props: object) {
+export default function Post() {
   const theme = useRecoilValue(mood);
+
 
   return (
     <Container mood={theme}>
       <ImgSection background="images/sample/sampleImg.png"></ImgSection>
       <ParagraphSection>
-        <Title mood={theme}>알고리즘 문제풀이에 대한 이야기?</Title>
+        <Title mood={theme}></Title>
         <Paragraph>
           동료들은 다 아는 정보, 나만 모르지 않게 만들어주는 일일일에서 한 주간
           개발자들이 많이 읽은 상위 10개의 아티클들을 소개합니다.

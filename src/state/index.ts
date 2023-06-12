@@ -1,3 +1,4 @@
+import { UserCredential } from "firebase/auth";
 import { atom } from "recoil";
 import { v1 } from "uuid";
 
@@ -11,4 +12,9 @@ export const mood = atom<themeType>({
 export const selectedOptions = atom({
   key: `selectedOptions/${v1()}`,
   default: "tranding",
+});
+
+export const loginData = atom<UserCredential | null>({
+  key: `loginData/${v1()}`,
+  default: null,
 });
