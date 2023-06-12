@@ -8,7 +8,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 export default function Post() {
   const theme = useRecoilValue(mood);
   const [postData, setPostData] = useRecoilState(loginData);
-  const ShowLoginPopup = useRecoilValue(showLoginPopup);
+  const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
 
   function handleGoogleLogin() {
     const provider = new GoogleAuthProvider();
@@ -29,7 +29,11 @@ export default function Post() {
           <LoginContainer mood={theme}>
             <LoginContainerIcon mood={theme}></LoginContainerIcon>
             <LoginContainerInput mood={theme}></LoginContainerInput>
-            <CloseBtn></CloseBtn>
+            <CloseBtn
+              onClick={() => {
+                setShowLoginPopup(!ShowLoginPopup);
+              }}
+            ></CloseBtn>
           </LoginContainer>
         </Container>
       )}
@@ -56,6 +60,8 @@ const Container = styled.div<{ mood: themeType }>`
 const LoginContainer = styled.div<{ mood: themeType }>`
   width: 606px;
   height: 530px;
+
+  position: relative;
 
   display: flex;
 
@@ -85,4 +91,20 @@ const LoginContainerInput = styled.div<{ mood: themeType }>`
   background-color: ${(props) => C[props.mood].BtnColor1};
 `;
 
-const CloseBtn = styled.div``;
+const CloseBtn = styled.div`
+  width: 24px;
+  height: 24px;
+
+  position: absolute;
+  right: 30px;
+  top: 30px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  background: url("images/loginpopup/closeBtn.jpg");
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
