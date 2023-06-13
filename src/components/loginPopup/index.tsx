@@ -27,8 +27,18 @@ export default function Post() {
       {ShowLoginPopup && (
         <Container mood={theme}>
           <LoginContainer mood={theme}>
-            <LoginContainerIcon mood={theme}></LoginContainerIcon>
-            <LoginContainerInput mood={theme}></LoginContainerInput>
+            <LoginContainerIcon mood={theme}>
+              <IconDiv>
+                <MainIcon />
+                환영합니다!
+              </IconDiv>
+            </LoginContainerIcon>
+            <LoginContainerInput mood={theme}>
+              <LoginInput>
+                <LoginTitle mood={theme}>로그인</LoginTitle>
+                <LoginOption mood={theme}>이메일로 로그인</LoginOption>
+              </LoginInput>
+            </LoginContainerInput>
             <CloseBtn
               onClick={() => {
                 setShowLoginPopup(!ShowLoginPopup);
@@ -76,19 +86,62 @@ const LoginContainerIcon = styled.div<{ mood: themeType }>`
   height: 530px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
   background-color: ${(props) => C[props.mood].BgColor};
+  color: ${(props) => C[props.mood].TextColor3};
+`;
+
+const MainIcon = styled.div`
+  width: 168px;
+  height: 108px;
+
+  background-image: url("images/loginpopup/Welcome!.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
+const IconDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 24px;
+
+  font-size: 1.75rem;
+  font-weight: 600;
 `;
 
 const LoginContainerInput = styled.div<{ mood: themeType }>`
   width: 390px;
   height: 530px;
 
+  position: relative;
+
   display: flex;
-  justify-self: center;
+  justify-content: center;
   align-items: center;
   background-color: ${(props) => C[props.mood].BtnColor1};
+`;
+
+const LoginInput = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const LoginTitle = styled.h2<{ mood: themeType }>`
+  font-size: 1.375rem;
+  color: ${(props) => C[props.mood].TextColor1};
+`;
+
+const LoginOption = styled.h2<{ mood: themeType }>`
+  font-size: 1rem;
+  color: ${(props) => C[props.mood].TextColor2};
 `;
 
 const CloseBtn = styled.div`
@@ -99,10 +152,11 @@ const CloseBtn = styled.div`
   right: 30px;
   top: 30px;
 
-  background-size: cover;
+  background-size: 15px 15px;
   background-repeat: no-repeat;
+  background-position: center;
 
-  background: url("images/loginpopup/closeBtn.jpg");
+  background-image: url("images/loginpopup/closeBtn.jpg");
 
   &:hover {
     cursor: pointer;
