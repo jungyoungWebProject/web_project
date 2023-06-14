@@ -37,6 +37,12 @@ export default function Post() {
               <LoginInput>
                 <LoginTitle mood={theme}>로그인</LoginTitle>
                 <LoginOption mood={theme}>이메일로 로그인</LoginOption>
+                <InputDiv>
+                  <EmailInput mood={theme}></EmailInput>
+                  <EmailSubmitBtn placeholder="이메일을 입력하세요.">
+                    로그인
+                  </EmailSubmitBtn>
+                </InputDiv>
               </LoginInput>
             </LoginContainerInput>
             <CloseBtn
@@ -142,6 +148,38 @@ const LoginTitle = styled.h2<{ mood: themeType }>`
 const LoginOption = styled.h2<{ mood: themeType }>`
   font-size: 1rem;
   color: ${(props) => C[props.mood].TextColor2};
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+`;
+
+const EmailInput = styled.input<{ mood: themeType }>`
+  width: 246px;
+  height: 48px;
+
+  box-sizing: border-box;
+
+  border: 1px solid ${(props) => C[props.mood].LineColor2};
+  border-radius: 2px 0px 0px 2px;
+  outline: none;
+
+  background-color: ${(props) => C[props.mood].BtnColor1};
+
+  &:focus {
+    border: 1px solid ${(props) => C[props.mood].BtnColor2};
+  }
+`;
+
+const EmailSubmitBtn = styled.div`
+  width: 96px;
+  height: 48px;
+
+  text-align: center;
+  line-height: 48px;
+
+  background-color: ${C.DarkTheme.BtnColor2};
+  font-weight: 600;
 `;
 
 const CloseBtn = styled.div`
