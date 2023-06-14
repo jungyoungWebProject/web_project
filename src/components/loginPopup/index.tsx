@@ -10,6 +10,10 @@ export default function Post() {
   const [postData, setPostData] = useRecoilState(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
 
+  const showData = () => {
+    console.log(postData);
+  };
+
   function handleGoogleLogin() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -28,7 +32,7 @@ export default function Post() {
         <Container mood={theme}>
           <LoginContainer mood={theme}>
             <LoginContainerIcon mood={theme}>
-              <IconDiv>
+              <IconDiv onClick={showData}>
                 <MainIcon />
                 환영합니다!
               </IconDiv>
@@ -38,11 +42,16 @@ export default function Post() {
                 <LoginTitle mood={theme}>로그인</LoginTitle>
                 <LoginOption mood={theme}>이메일로 로그인</LoginOption>
                 <InputDiv>
-                  <EmailInput mood={theme}></EmailInput>
-                  <EmailSubmitBtn placeholder="이메일을 입력하세요.">
-                    로그인
-                  </EmailSubmitBtn>
+                  <EmailInput
+                    placeholder="이메일을 입력하세요."
+                    mood={theme}
+                  ></EmailInput>
+                  <EmailSubmitBtn>로그인</EmailSubmitBtn>
                 </InputDiv>
+                <LoginOption mood={theme}>소셜 계정으로 로그인</LoginOption>
+                <OAuthIconDiv>
+                  <GoogleOAuthBtn onClick={handleGoogleLogin} />
+                </OAuthIconDiv>
               </LoginInput>
             </LoginContainerInput>
             <CloseBtn
@@ -126,11 +135,13 @@ const LoginContainerInput = styled.div<{ mood: themeType }>`
   width: 390px;
   height: 530px;
 
+  display: flex;
+
   position: relative;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-sizing: border-box;
+  padding: 24px;
+
   background-color: ${(props) => C[props.mood].BtnColor1};
 `;
 
@@ -141,13 +152,16 @@ const LoginInput = styled.div`
 `;
 
 const LoginTitle = styled.h2<{ mood: themeType }>`
-  font-size: 1.375rem;
+  font-size: 1.3125rem;
   color: ${(props) => C[props.mood].TextColor1};
+
+  margin: 62px 0px 0px 0px;
 `;
 
 const LoginOption = styled.h2<{ mood: themeType }>`
   font-size: 1rem;
   color: ${(props) => C[props.mood].TextColor2};
+  margin: 18px 0px;
 `;
 
 const InputDiv = styled.div`
@@ -164,7 +178,13 @@ const EmailInput = styled.input<{ mood: themeType }>`
   border-radius: 2px 0px 0px 2px;
   outline: none;
 
-  background-color: ${(props) => C[props.mood].BtnColor1};
+  padding-left: 16px;
+  margin-bottom: 23px;
+
+  font-size: 1rem;
+  color: ${(props) => C[props.mood].TextColor1};
+
+  background-color: ${(props) => C[props.mood].LineColor1};
 
   &:focus {
     border: 1px solid ${(props) => C[props.mood].BtnColor2};
@@ -180,6 +200,40 @@ const EmailSubmitBtn = styled.div`
 
   background-color: ${C.DarkTheme.BtnColor2};
   font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const OAuthIconDiv = styled.div`
+  width: 100%;
+  height: min-content;
+
+  padding: 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+`;
+
+const GoogleOAuthBtn = styled.button`
+  width: 48px;
+  height: 48px;
+
+  background-image: url("images/loginpopup/GoogleIcon.png");
+
+  background-position: center;
+  background-size: 66%;
+  background-repeat: no-repeat;
+  background-color: white;
+
+  border: none;
+  border-radius: 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const CloseBtn = styled.div`
