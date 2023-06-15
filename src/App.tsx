@@ -14,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<P.MainPage />}></Route>
           <Route path="/recent" element={<P.MainPage />}></Route>
+          <Route path="/write" element={<P.WritingPage />}></Route>
         </Routes>
       </BrowserRouter>
     </Body>

@@ -12,7 +12,7 @@ export default function Post(props: any) {
       <Container mood={theme}>
         <ImgSection background="images/sample/sampleImg.png"></ImgSection>
         <ParagraphSection>
-          <Title mood={theme}>조우성병신</Title>
+          <Title mood={theme}>제목!!</Title>
           <Paragraph>
             동료들은 다 아는 정보, 나만 모르지 않게 만들어주는 일일일에서 한
             주간 개발자들이 많이 읽은 상위 10개의 아티클들을 소개합니다.

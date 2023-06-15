@@ -3,6 +3,7 @@ import { mood, themeType, showLoginPopup, loginData } from "state/index";
 import styled from "styled-components";
 import * as C from "style";
 import { UserCredential } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const postData = useRecoilValue(loginData);
@@ -35,7 +36,9 @@ export default function Header() {
             )}
             {postData && (
               <>
-                <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
+                <Link to="/write">
+                  <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
+                </Link>
                 <Profile data={postData}></Profile>
               </>
             )}

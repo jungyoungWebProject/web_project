@@ -20,6 +20,7 @@ export default function Post() {
       .then((data) => {
         setPostData(data);
         console.log(postData);
+        setShowLoginPopup(!ShowLoginPopup);
       })
       .catch((err) => {
         console.log("굿조맛탱탱탱탱볼", err);
