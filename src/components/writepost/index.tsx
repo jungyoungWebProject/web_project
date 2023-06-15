@@ -12,19 +12,17 @@ export default function WritePost() {
 
   const [userPost, setUserPost] = useRecoilState(loginData);
 
-  let Postdata = { ...userPost };
-
   async function uploadPost() {
     try {
       console.log(userPost);
       const docRef = await addDoc(collection(db, "post"), {
         title: Title.current.value,
         paragraph: Paragraph.current.value,
-        userid: Postdata.user?.uid,
-        username: Postdata.user?.displayName,
+        userid: userPost?.user.uid,
+        username: userPost?.user.displayName,
         id: 99,
         heart: 6,
-        date: Postdata.user?.metadata.creationTime,
+        date: userPost?.user.metadata.creationTime,
       });
 
       console.log("Document written with ID: ", docRef.id);
