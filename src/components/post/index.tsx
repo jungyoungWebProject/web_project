@@ -2,27 +2,29 @@ import { mood, themeType } from "state/index";
 import { useRecoilValue } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export default function Post() {
+export default function Post(props: any) {
   const theme = useRecoilValue(mood);
 
-
   return (
-    <Container mood={theme}>
-      <ImgSection background="images/sample/sampleImg.png"></ImgSection>
-      <ParagraphSection>
-        <Title mood={theme}></Title>
-        <Paragraph>
-          동료들은 다 아는 정보, 나만 모르지 않게 만들어주는 일일일에서 한 주간
-          개발자들이 많이 읽은 상위 10개의 아티클들을 소개합니다.
-        </Paragraph>
-        <PostInfo>2023년 5월 30일 · 0개의 댓글</PostInfo>
-      </ParagraphSection>
-      <UserInfo mood={theme}>
-        by
-        <UserName mood={theme}>fwefe</UserName>
-      </UserInfo>
-    </Container>
+    <Link to={`/post/`}>
+      <Container mood={theme}>
+        <ImgSection background="images/sample/sampleImg.png"></ImgSection>
+        <ParagraphSection>
+          <Title mood={theme}>조우성병신</Title>
+          <Paragraph>
+            동료들은 다 아는 정보, 나만 모르지 않게 만들어주는 일일일에서 한
+            주간 개발자들이 많이 읽은 상위 10개의 아티클들을 소개합니다.
+          </Paragraph>
+          <PostInfo>2023년 5월 30일 · 0개의 댓글</PostInfo>
+        </ParagraphSection>
+        <UserInfo mood={theme}>
+          by
+          <UserName mood={theme}>fwefe</UserName>
+        </UserInfo>
+      </Container>
+    </Link>
   );
 }
 

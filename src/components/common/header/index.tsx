@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { mood, themeType, showLoginPopup, loginData } from "state/index";
 import styled from "styled-components";
 import * as C from "style";
+import { UserCredential } from "firebase/auth";
 
 export default function Header() {
   const postData = useRecoilValue(loginData);
@@ -31,6 +32,12 @@ export default function Header() {
               >
                 로그인
               </LoginBtn>
+            )}
+            {postData && (
+              <>
+                <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
+                <Profile data={postData}></Profile>
+              </>
             )}
           </HeaderContainerOptions>
         </HeaderContainer>
@@ -77,21 +84,22 @@ const HeaderContainerOptions = styled.div`
   height: min-content;
 
   display: flex;
-  gap: 5px;
   align-items: center;
   font-size: 1rem;
+
+  gap: 5px;
 `;
 
 const ThemeBtn = styled.button<{ mood: themeType }>`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 
   border: none;
   border-radius: 25px;
 
   background: url(${(props) => C[props.mood].BtnUrl1});
   background-position: center;
-  background-size: 30px;
+  background-size: 24px;
   background-repeat: no-repeat;
 
   animation: none;
@@ -102,15 +110,15 @@ const ThemeBtn = styled.button<{ mood: themeType }>`
 `;
 
 const SearchBtn = styled.div<{ mood: themeType }>`
-  width: 50px;
-  height: 0px;
+  width: 40px;
+  height: 40px;
 
   border: none;
   border-radius: 25px;
 
-  background: url(${(props) => C[props.mood].BtnUrl2});
+  background-image: url(${(props) => C[props.mood].BtnUrl2});
   background-position: center;
-  background-size: 20px;
+  background-size: ${(props) => (props.mood === "DarkTheme" ? "20px" : "25px")};
   background-repeat: no-repeat;
 
   &:hover {
@@ -124,15 +132,63 @@ const LoginBtn = styled.div<{ mood: themeType }>`
 
   display: flex;
 
+  border: 1px solid ${(props) => C[props.mood].TextColor1};
   border-radius: 17.5px;
   font-size: 1rem;
   font-weight: 600;
 
-  background-color: ${(props) => C[props.mood].TextColor1};
-  color: ${(props) => C[props.mood].BgColor};
+  border: 1px solid ${(props) => C[props.mood].TextColor1};
+  color: ${(props) => C[props.mood].TextColor1};
 
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    transition-timing-function: ease-out;
+    transition-duration: 0.1s;
+    background-color: ${(props) => C[props.mood].TextColor1};
+    color: ${(props) => C[props.mood].BgColor};
+  }
+`;
+const NewPostBtn = styled.div<{ mood: themeType }>`
+  width: 110px;
+  height: 32.5px;
+
+  display: flex;
+
+  border-radius: 17.5px;
+  font-size: 1rem;
+  font-weight: 600;
+
+  border: 1px solid ${(props) => C[props.mood].TextColor1};
+  color: ${(props) => C[props.mood].TextColor1};
+
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    transition-timing-function: ease-out;
+    transition-duration: 0.1s;
+    background-color: ${(props) => C[props.mood].TextColor1};
+    color: ${(props) => C[props.mood].BgColor};
+  }
+`;
+
+const Profile = styled.div<{ data: UserCredential }>`
+  width: 50px;
+  height: 50px;
+
+  border: none;
+  border-radius: 25px;
+
+  background: url(${(props) => props.data.user.photoURL});
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+
+  animation: none;
 
   &:hover {
     cursor: pointer;

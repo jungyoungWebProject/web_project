@@ -104,7 +104,7 @@ const ArrangeOptions = styled.button<{
   font-weight: ${(props) => (props.selected === props.option ? 600 : 500)};
 
   transition-timing-function: ease-out;
-  transition-duration: 0.1s;
+  transition-duration: 0s;
 
   text-align: center;
   border: none;
@@ -156,9 +156,6 @@ const SelectionTag = styled.div<{ mood: themeType }>`
 
   font-size: 1rem;
   font-weight: 600;
-
-  transition-timing-function: ease-out;
-  transition-duration: 0.1s;
 
   text-align: center;
   border: none;
