@@ -33,7 +33,7 @@ export default function WritePost() {
 
   return (
     <Container>
-      <input ref={Title} type="text"></input>제목
+      <input ref={Title} type="text"></input>제목e
       <input ref={Paragraph} type="text"></input>내용
       <button onClick={uploadPost}>데이터 추가!</button>
     </Container>
