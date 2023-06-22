@@ -18,8 +18,8 @@ export default function Post() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((data) => {
-        setPostData(data);
-        console.log(postData);
+        setPostData(auth.currentUser);
+        console.log(postData);  
         setShowLoginPopup(!ShowLoginPopup);
       })
       .catch((err) => {

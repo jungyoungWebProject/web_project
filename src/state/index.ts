@@ -1,4 +1,4 @@
-import { UserCredential } from "firebase/auth";
+import { User } from "firebase/auth";
 import { atom } from "recoil";
 import { v1 } from "uuid";
 
@@ -14,7 +14,7 @@ export const selectedOptions = atom({
   default: "tranding",
 });
 
-export const loginData = atom<UserCredential | null>({
+export const loginData = atom<User | null>({
   key: `loginData/${v1()}`,
   default: null,
 });

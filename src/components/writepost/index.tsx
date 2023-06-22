@@ -18,11 +18,11 @@ export default function WritePost() {
       const docRef = await addDoc(collection(db, "post"), {
         title: Title.current.value,
         paragraph: Paragraph.current.value,
-        userid: userPost?.user.uid,
-        username: userPost?.user.displayName,
+        userid: userPost?.uid,
+        username: userPost?.displayName,
         id: 99,
         heart: 6,
-        date: userPost?.user.metadata.creationTime,
+        date: userPost?.metadata.creationTime,
       });
 
       console.log("Document written with ID: ", docRef.id);

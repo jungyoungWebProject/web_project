@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { mood, themeType, showLoginPopup, loginData } from "state/index";
 import styled from "styled-components";
 import * as C from "style";
-import { UserCredential } from "firebase/auth";
+import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 export default function Header() {
@@ -179,14 +179,14 @@ const NewPostBtn = styled.div<{ mood: themeType }>`
   }
 `;
 
-const Profile = styled.div<{ data: UserCredential }>`
+const Profile = styled.div<{ data: User }>`
   width: 50px;
   height: 50px;
 
   border: none;
   border-radius: 25px;
 
-  background: url(${(props) => props.data.user.photoURL});
+  background: url(${(props) => props.data.photoURL});
   background-position: center;
   background-size: 30px;
   background-repeat: no-repeat;
