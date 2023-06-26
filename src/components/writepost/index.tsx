@@ -67,7 +67,7 @@ const WTitle = styled.input<{ mood: themeType }>`
   outline: none;
 
   ::placeholder {
-    color: ${(props) => C[props.mood].TextColor3};
+    color: ${(props) => C[props.mood].TextColor2};
 
     font-size: 2.75rem;
     font-family: "Fira Code";
