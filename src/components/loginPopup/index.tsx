@@ -2,8 +2,6 @@ import { mood, themeType, loginData, showLoginPopup } from "state/index";
 import { useRecoilValue, useRecoilState } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
-import { auth } from "../../firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function Post() {
   const theme = useRecoilValue(mood);
@@ -13,19 +11,6 @@ export default function Post() {
   const showData = () => {
     console.log(postData);
   };
-
-  function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((data) => {
-        setPostData(auth.currentUser);
-        console.log(postData);  
-        setShowLoginPopup(!ShowLoginPopup);
-      })
-      .catch((err) => {
-        console.log("굿조맛탱탱탱탱볼", err);
-      });
-  }
 
   return (
     <>
@@ -51,7 +36,7 @@ export default function Post() {
                 </InputDiv>
                 <LoginOption mood={theme}>소셜 계정으로 로그인</LoginOption>
                 <OAuthIconDiv>
-                  <GoogleOAuthBtn onClick={handleGoogleLogin} />
+                  <GoogleOAuthBtn />
                 </OAuthIconDiv>
               </LoginInput>
             </LoginContainerInput>
