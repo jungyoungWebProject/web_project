@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import * as C from "../../style/index";
-import { useRef } from "react";
 import { mood, themeType } from "state";
 import { useRecoilValue } from "recoil";
 
