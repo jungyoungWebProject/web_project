@@ -24,7 +24,7 @@ export const showLoginPopup = atom<boolean>({
   default: false,
 });
 
-export const markdownText = atom<object>({
+export const markdownText = atom({
   key: "markdown",
   default: {
     title: "",

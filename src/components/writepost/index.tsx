@@ -2,6 +2,7 @@ import styled from "styled-components";
 import * as C from "../../style/index";
 import { mood, themeType, markdownText } from "state";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 export default function WritePost() {
   const theme = useRecoilValue(mood);
@@ -14,7 +15,10 @@ export default function WritePost() {
           mood={theme}
           placeholder="제목을 입력하세요"
           onChange={(e) => {
-            setWritedText({ title: e.target.value });
+            setWritedText({
+              ...writedText,
+              title: "#" + e.target.value,
+            });
           }}
         />
         <DivideLine mood={theme} />
@@ -24,10 +28,14 @@ export default function WritePost() {
           mood={theme}
           placeholder="당신의 이야기를 적어보세요..."
           onChange={(e) => {
-            setWritedText({ paragraph: e.target.value });
+            setWritedText({ ...writedText, paragraph: e.target.value });
+            console.log(writedText);
           }}
         />
       </WriteArea>
+      <MarkDownView mood={theme}>
+        <ReactMarkdown>{writedText.paragraph}</ReactMarkdown>
+      </MarkDownView>
     </Container>
   );
 }
@@ -53,13 +61,13 @@ const WriteArea = styled.div<{ mood: themeType }>`
   border: none;
   background-color: ${(props) => C[props.mood].BgColor};
 `;
-const WTitle = styled.input<{ mood: themeType }>`
+const WTitle = styled.textarea<{ mood: themeType }>`
   width: 100%;
   height: min-content;
 
   min-height: 66px;
 
-  white-space: pre-wrap;
+  white-space: pre-line;
   background-color: ${(props) => C[props.mood].BgColor};
   color: ${(props) => C[props.mood].TextColor1};
 
@@ -92,7 +100,7 @@ const DivideLine = styled.div<{ mood: themeType }>`
   background-color: ${(props) => C[props.mood].LineColor2};
 `;
 
-const WTag = styled.input<{ mood: themeType }>`
+const WTag = styled.textarea<{ mood: themeType }>`
   width: 100%;
   height: min-content;
 
@@ -131,9 +139,9 @@ const MarkDownButtonArea = styled.div`
   border: 1px solid gray;
 `;
 
-const MarkDownTextArea = styled.input<{ mood: themeType }>`
+const MarkDownTextArea = styled.textarea<{ mood: themeType }>`
   width: 100%;
-  height: min-content;
+  height: ;
 
   min-height: 34px;
 
@@ -143,7 +151,7 @@ const MarkDownTextArea = styled.input<{ mood: themeType }>`
   border: none;
 
   outline: none;
-
+  white-space: pre-wrap;
   color: ${(props) => C[props.mood].TextColor3};
 
   font-size: 1.125rem;
@@ -151,11 +159,27 @@ const MarkDownTextArea = styled.input<{ mood: themeType }>`
   word-spacing: -0.25rem;
 
   background-color: ${(props) => C[props.mood].BgColor};
-  color: ${(props) => C[props.mood].TextColor1};
 
   ::placeholder {
     color: ${(props) => C[props.mood].TextColor1};
 
     font-style: oblique;
   }
+`;
+
+const MarkDownView = styled.div<{ mood: themeType }>`
+  width: 50%;
+  height: 100%;
+
+  box-sizing: border-box;
+  padding: 48px;
+
+  background-color: ${(props) => C[props.mood].LineColor1};
+
+  font-size: 1.125rem;
+  font-family: "Fira Code";
+  word-spacing: -0.25rem;
+
+  background-color: ${(props) => C[props.mood].BgColor};
+  color: ${(props) => C[props.mood].TextColor1};
 `;
