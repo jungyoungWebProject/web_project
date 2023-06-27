@@ -11,19 +11,21 @@ export default function WritePost() {
   return (
     <Container mood={theme}>
       <WriteArea mood={theme}>
-        <WTitle
-          mood={theme}
-          placeholder="제목을 입력하세요"
-          onChange={(e) => {
-            setWritedText({
-              ...writedText,
-              title: "#" + e.target.value,
-            });
-          }}
-        />
-        <DivideLine mood={theme} />
-        <WTag mood={theme} placeholder="태그를 입력하세요" />
-        <MarkDownButtonArea />
+        <WriteContainerHeader>
+          <WTitle
+            mood={theme}
+            placeholder="제목을 입력하세요"
+            onChange={(e) => {
+              setWritedText({
+                ...writedText,
+                title: "# " + e.target.value + "\r\n",
+              });
+            }}
+          />
+          <DivideLine mood={theme} />
+          <WTag mood={theme} placeholder="태그를 입력하세요" />
+          <MarkDownButtonArea />
+        </WriteContainerHeader>
         <MarkDownTextArea
           mood={theme}
           placeholder="당신의 이야기를 적어보세요..."
@@ -34,7 +36,9 @@ export default function WritePost() {
         />
       </WriteArea>
       <MarkDownView mood={theme}>
-        <ReactMarkdown>{writedText.paragraph}</ReactMarkdown>
+        <ReactMarkDown1 mood={theme}>
+          {writedText.title + writedText.paragraph}
+        </ReactMarkDown1>
       </MarkDownView>
     </Container>
   );
@@ -46,9 +50,16 @@ const Container = styled.div<{ mood: themeType }>`
   height: 100vh;
 
   box-sizing: border-box;
-  padding: 32px 48px 0px;
+
+  display: flex;
+  overflow: hidden;
 
   background-color: ${(props) => C[props.mood].BgColor};
+`;
+
+const WriteContainerHeader = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const WriteArea = styled.div<{ mood: themeType }>`
@@ -58,16 +69,17 @@ const WriteArea = styled.div<{ mood: themeType }>`
   display: flex;
   flex-direction: column;
 
+  padding: 32px 48px 0px;
+  box-sizing: border-box;
+
   border: none;
   background-color: ${(props) => C[props.mood].BgColor};
 `;
-const WTitle = styled.textarea<{ mood: themeType }>`
+const WTitle = styled.input<{ mood: themeType }>`
   width: 100%;
   height: min-content;
 
   min-height: 66px;
-
-  white-space: pre-line;
   background-color: ${(props) => C[props.mood].BgColor};
   color: ${(props) => C[props.mood].TextColor1};
 
@@ -112,6 +124,7 @@ const WTag = styled.textarea<{ mood: themeType }>`
   border: none;
 
   outline: none;
+  resize: none;
 
   color: ${(props) => C[props.mood].TextColor3};
 
@@ -141,7 +154,7 @@ const MarkDownButtonArea = styled.div`
 
 const MarkDownTextArea = styled.textarea<{ mood: themeType }>`
   width: 100%;
-  height: ;
+  height: 60%;
 
   min-height: 34px;
 
@@ -151,6 +164,7 @@ const MarkDownTextArea = styled.textarea<{ mood: themeType }>`
   border: none;
 
   outline: none;
+  resize: none;
   white-space: pre-wrap;
   color: ${(props) => C[props.mood].TextColor3};
 
@@ -165,6 +179,19 @@ const MarkDownTextArea = styled.textarea<{ mood: themeType }>`
 
     font-style: oblique;
   }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => C[props.mood].TextColor1};
+    border-radius: 2.5px;
+  }
 `;
 
 const MarkDownView = styled.div<{ mood: themeType }>`
@@ -172,7 +199,7 @@ const MarkDownView = styled.div<{ mood: themeType }>`
   height: 100%;
 
   box-sizing: border-box;
-  padding: 48px;
+  padding: 48px 0px 0px 0px;
 
   background-color: ${(props) => C[props.mood].LineColor1};
 
@@ -182,4 +209,26 @@ const MarkDownView = styled.div<{ mood: themeType }>`
 
   background-color: ${(props) => C[props.mood].BgColor};
   color: ${(props) => C[props.mood].TextColor1};
+`;
+
+const ReactMarkDown1 = styled(ReactMarkdown)<{ mood: themeType }>`
+  width: 100%;
+  height: 100%;
+
+  white-space: pre-wrap;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => C[props.mood].TextColor1};
+    border-radius: 2.5px;
+  }
 `;
