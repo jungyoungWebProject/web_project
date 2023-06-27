@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import * as C from "../../style/index";
-import { mood, themeType, markdownText } from "state";
+import { mood, themeType, markdownText, showPublishPage } from "state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Link } from "react-router-dom";
 
-export default function WritePost() {
+export default function PublishPost() {
   const theme = useRecoilValue(mood);
   const [writedText, setWritedText] = useRecoilState(markdownText);
+  const [showPublish, setShowPublish] = useRecoilState(showPublishPage);
 
   return (
     <Container mood={theme}>
@@ -47,11 +48,15 @@ export default function WritePost() {
                 임시저장
               </EditBtn>
             </Link>
-            <Link to="publish">
-              <EditBtn mood={theme} usage="publish">
-                출간하기
-              </EditBtn>
-            </Link>
+            <EditBtn
+              mood={theme}
+              usage="publish"
+              onClick={() => {
+                setShowPublish(true);
+              }}
+            >
+              출간하기
+            </EditBtn>
           </EditBtnDiv>
         </Editbar>
       </WriteArea>

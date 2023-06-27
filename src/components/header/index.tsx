@@ -1,14 +1,34 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { mood, themeType, showLoginPopup, loginData } from "state/index";
+import {
+  mood,
+  themeType,
+  showLoginPopup,
+  loginData,
+  showQuickMenu,
+} from "state/index";
 import styled from "styled-components";
 import * as C from "style";
-import { User } from "firebase/auth";
+import { User, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
 
 export default function Header() {
   const postData = useRecoilValue(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [theme, setTheme] = useRecoilState(mood);
+  const [ShowQuickMenu, setShowQuickMenu] = useRecoilState(showQuickMenu);
+
+  async function SignOut() {
+    await signOut(auth)
+      .then(() => {
+        console.log("로그아웃 성공");
+        localStorage.removeItem("loginData");
+      })
+      .catch(() => {
+        console.log("로그아웃 실패");
+      });
+    window.location.reload();
+  }
 
   return (
     <>
@@ -39,7 +59,32 @@ export default function Header() {
                 <Link to="/write">
                   <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
                 </Link>
-                <Profile data={postData.user}></Profile>
+                <Profile
+                  data={postData.user}
+                  onClick={() => {
+                    ShowQuickMenu
+                      ? setShowQuickMenu(false)
+                      : setShowQuickMenu(true);
+                  }}
+                >
+                  {ShowQuickMenu && (
+                    <QuickMenu>
+                      <QuickMenuElement mood={theme}>
+                        내 벨로그
+                      </QuickMenuElement>
+                      <QuickMenuElement mood={theme}>임시 글</QuickMenuElement>
+                      <QuickMenuElement mood={theme}>
+                        읽기 목록
+                      </QuickMenuElement>
+                      <QuickMenuElement mood={theme}>설정</QuickMenuElement>
+                      <Link to="/">
+                        <QuickMenuElement mood={theme} onClick={SignOut}>
+                          로그아웃
+                        </QuickMenuElement>
+                      </Link>
+                    </QuickMenu>
+                  )}
+                </Profile>
               </>
             )}
           </HeaderContainerOptions>
@@ -180,8 +225,10 @@ const NewPostBtn = styled.div<{ mood: themeType }>`
 `;
 
 const Profile = styled.div<{ data: User }>`
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
+
+  position: relative;
 
   border: none;
   border-radius: 25px;
@@ -191,9 +238,44 @@ const Profile = styled.div<{ data: User }>`
   background-size: 30px;
   background-repeat: no-repeat;
 
+  margin: 0 15px 0 15px;
+
   animation: none;
 
   &:hover {
     cursor: pointer;
+  }
+`;
+
+const QuickMenu = styled.div`
+  width: 192px;
+  height: min-content;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  top: 3rem;
+  right: 0;
+`;
+
+const QuickMenuElement = styled.div<{ mood: themeType }>`
+  width: 100%;
+  height: 48px;
+
+  position: static;
+
+  box-sizing: border-box;
+  padding: 12px 16px;
+
+  font-size: 1rem;
+  font-family: "Fira Code";
+
+  color: ${(props) => C[props.mood].TextColor1};
+  background-color: ${(props) => C[props.mood].BgColor};
+
+  &:hover {
+    color: ${(props) => C[props.mood].BtnColor2};
   }
 `;

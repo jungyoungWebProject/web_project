@@ -4,10 +4,11 @@ import * as C from "style";
 import styled from "styled-components";
 import {
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   getRedirectResult,
 } from "firebase/auth";
 import { auth } from "../../firebase";
+import { useEffect } from "react";
 
 export default function Post() {
   const theme = useRecoilValue(mood);
@@ -15,27 +16,33 @@ export default function Post() {
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [data, setData] = useRecoilState(loginData);
 
-  const showData = () => {
-    console.log(postData);
-  };
+  useEffect(() => {
+    const getRedirectLoginResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+
+        if (result?.user) {
+          // 사용자 정보 확인
+          setData(result);
+          console.log("연동성공");
+          window.location.reload();
+        } else {
+          console.log("연동실패");
+        }
+      } catch (error) {
+        console.log("연동실패", error);
+      }
+    };
+
+    getRedirectLoginResult();
+  }, [auth]);
 
   async function GetGoogleLogin() {
+    setShowLoginPopup(!ShowLoginPopup);
     const provider = new GoogleAuthProvider();
 
-    await signInWithPopup(auth, provider);
-
-    // Redirect 결과 가져오기
-    const result = await getRedirectResult(auth);
-
-    // 사용자 정보 확인
-    if (result?.user) {
-      // userData 업데이트
-      setData(result);
-      console.log("연동성공");
-      setShowLoginPopup(!ShowLoginPopup);
-    } else {
-      console.log("연동실패");
-    }
+    await signInWithRedirect(auth, provider);
+    window.location.reload();
   }
 
   return (
@@ -44,7 +51,7 @@ export default function Post() {
         <Container mood={theme}>
           <LoginContainer mood={theme}>
             <LoginContainerIcon mood={theme}>
-              <IconDiv onClick={showData}>
+              <IconDiv>
                 <MainIcon />
                 환영합니다!
               </IconDiv>
