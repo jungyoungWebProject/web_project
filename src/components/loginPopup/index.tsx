@@ -2,15 +2,41 @@ import { mood, themeType, loginData, showLoginPopup } from "state/index";
 import { useRecoilValue, useRecoilState } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  getRedirectResult,
+} from "firebase/auth";
+import { auth } from "../../firebase";
 
 export default function Post() {
   const theme = useRecoilValue(mood);
   const [postData, setPostData] = useRecoilState(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
+  const [data, setData] = useRecoilState(loginData);
 
   const showData = () => {
     console.log(postData);
   };
+
+  async function GetGoogleLogin() {
+    const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, provider);
+
+    // Redirect 결과 가져오기
+    const result = await getRedirectResult(auth);
+
+    // 사용자 정보 확인
+    if (result?.user) {
+      // userData 업데이트
+      setData(result);
+      console.log("연동성공");
+      setShowLoginPopup(!ShowLoginPopup);
+    } else {
+      console.log("연동실패");
+    }
+  }
 
   return (
     <>
@@ -36,7 +62,7 @@ export default function Post() {
                 </InputDiv>
                 <LoginOption mood={theme}>소셜 계정으로 로그인</LoginOption>
                 <OAuthIconDiv>
-                  <GoogleOAuthBtn />
+                  <GoogleOAuthBtn onClick={GetGoogleLogin} />
                 </OAuthIconDiv>
               </LoginInput>
             </LoginContainerInput>

@@ -39,7 +39,7 @@ export default function Header() {
                 <Link to="/write">
                   <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
                 </Link>
-                <Profile data={postData}></Profile>
+                <Profile data={postData.user}></Profile>
               </>
             )}
           </HeaderContainerOptions>

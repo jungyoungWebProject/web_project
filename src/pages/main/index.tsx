@@ -2,6 +2,7 @@ import * as C from "../../components/index";
 import styled from "styled-components";
 
 export default function MainPage() {
+
   return (
     <>
       <Container>
