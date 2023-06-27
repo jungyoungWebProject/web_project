@@ -23,3 +23,11 @@ export const showLoginPopup = atom<boolean>({
   key: `showLoginPopup${v1()}`,
   default: false,
 });
+
+export const markdownText = atom<object>({
+  key: "markdown",
+  default: {
+    title: "",
+    paragraph: "",
+  },
+});
