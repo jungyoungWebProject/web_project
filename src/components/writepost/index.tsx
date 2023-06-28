@@ -11,15 +11,12 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { addDoc, doc } from "firebase/firestore";
 
 export default function PublishPost() {
   const theme = useRecoilValue(mood);
   const [writedText, setWritedText] = useRecoilState(markdownText);
   const [showPublish, setShowPublish] = useRecoilState(showPublishPage);
   const [PostData, setPostData] = useRecoilState(postData);
-
-  function generatePost() {}
 
   useEffect(() => {
     setWritedText({ ...writedText, title: "", paragraph: "" });

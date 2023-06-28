@@ -65,13 +65,14 @@ export const postData = atom({
   key: `postData${v1()}`,
   default: {
     id: v1(),
-    user: "",
+    wuser: "",
     title: "",
     summary: "",
     paragraph: "",
     mainimgurl: "",
-    date: new Date(),
+    date: "",
     postUrl: "",
     public: true,
+    markdown: "",
   },
 });

@@ -13,11 +13,10 @@ import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const postData = useRecoilValue(loginData);
+  const LoginData = useRecoilValue(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [theme, setTheme] = useRecoilState(mood);
   const [ShowQuickMenu, setShowQuickMenu] = useRecoilState(showQuickMenu);
-  const LoginData = useRecoilValue(loginData);
 
   async function SignOut() {
     await signOut(auth)
@@ -45,7 +44,7 @@ export default function Header() {
               }}
             ></ThemeBtn>
             <SearchBtn mood={theme}></SearchBtn>
-            {!postData && (
+            {!LoginData && (
               <LoginBtn
                 mood={theme}
                 onClick={() => {
@@ -55,13 +54,13 @@ export default function Header() {
                 로그인
               </LoginBtn>
             )}
-            {postData && (
+            {LoginData && (
               <>
                 <Link to="/write">
                   <NewPostBtn mood={theme}>새 글 작성</NewPostBtn>
                 </Link>
                 <Profile
-                  data={postData.user}
+                  data={LoginData.user}
                   onClick={() => {
                     ShowQuickMenu
                       ? setShowQuickMenu(false)

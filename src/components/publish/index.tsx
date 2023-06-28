@@ -20,8 +20,50 @@ export default function PostSection() {
   const LoginData = useRecoilValue(loginData);
   const [isBtnSelected, setIsBtnSelected] = useState(true);
 
+  const saveImgFile = (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPostData({
+        ...PostData,
+        mainimgurl: `${reader.result}`,
+      });
+    };
+  };
+
+  function resetData() {
+    setPostData({
+      id: "",
+      wuser: "",
+      title: "",
+      summary: "",
+      paragraph: "",
+      mainimgurl: "",
+      date: "",
+      postUrl: "",
+      public: true,
+      markdown: ""
+    });
+  }
+
   useEffect(() => {
+    let date = new Date();
+
     setShowPublish(false);
+
+    setPostData((prevData) => ({
+      ...prevData,
+      wuser: `${LoginData?.user.email?.slice(
+        0,
+        LoginData?.user.email?.indexOf("@")
+      )}`,
+      date: `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDay()}일`,
+      postUrl: `${LoginData?.user.email?.slice(
+        0,
+        LoginData?.user.email?.indexOf("@")
+      )}/`,
+    }));
   }, []);
 
   return (
@@ -31,8 +73,20 @@ export default function PostSection() {
           <PreViewArea mood={theme}>
             <h2>포스트 미리보기</h2>
             <PreViewContents>
-              <UpLoadImage mood={theme}>
-                <UpLoadBtn mood={theme}>썸네일 업로드</UpLoadBtn>
+              <UpLoadImage background={PostData.mainimgurl} mood={theme}>
+                <input
+                  type="file"
+                  id="file"
+                  style={{ display: "none" }}
+                  onChange={saveImgFile}
+                ></input>
+                {PostData.mainimgurl === "" ? (
+                  <UpLoadBtn mood={theme} htmlFor="file">
+                    썸네일 업로드
+                  </UpLoadBtn>
+                ) : (
+                  ""
+                )}
               </UpLoadImage>
               <IntroduceText
                 mood={theme}
@@ -93,7 +147,11 @@ export default function PostSection() {
                     onChange={(e) => {
                       setPostData((prevData) => ({
                         ...prevData,
-                        postUrl: e.target.value,
+                        postUrl:
+                          `${LoginData?.user.email?.slice(
+                            0,
+                            LoginData?.user.email?.indexOf("@")
+                          )}/` + e.target.value,
                       }));
                     }}
                   />
@@ -123,17 +181,10 @@ export default function PostSection() {
                     mood={theme}
                     usage="publish"
                     onClick={() => {
-                      let date = new Date();
-
-                      setPostData((prevData) => ({
-                        ...prevData,
-                        user: LoginData?.user.email || "",
-                        date: date,
-                      }));
-
                       addDoc(collection(database, "post"), {
                         PostData,
                       });
+                      resetData();
                     }}
                   >
                     출간하기
@@ -191,7 +242,7 @@ const PreViewContents = styled.div`
   gap: 32px;
 `;
 
-const UpLoadImage = styled.div<{ mood: themeType }>`
+const UpLoadImage = styled.div<{ mood: themeType; background: string }>`
   width: 100%;
   height: 193px;
 
@@ -200,9 +251,12 @@ const UpLoadImage = styled.div<{ mood: themeType }>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background: url(${(props) => props.background});
+  background-size: cover;
 `;
 
-const UpLoadBtn = styled.div<{ mood: themeType }>`
+const UpLoadBtn = styled.label<{ mood: themeType }>`
   width: 165px;
   height: 32px;
 
@@ -218,6 +272,8 @@ const UpLoadBtn = styled.div<{ mood: themeType }>`
   font-size: 1rem;
   font-family: "Fira Code";
   font-weight: 600;
+
+  cursor: pointer;
 `;
 
 const IntroduceText = styled.textarea<{ mood: themeType }>`

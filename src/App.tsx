@@ -21,7 +21,7 @@ export default function App() {
               0,
               LoginData?.user.email?.indexOf("@")
             )}`}
-            element={<P.MyPage></P.MyPage>}
+            element={<P.ShowPost></P.ShowPost>}
           ></Route>
         </Routes>
       </BrowserRouter>

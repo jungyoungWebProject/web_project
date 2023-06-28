@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function MyPage() {
+export default function ShowPost() {
 
   return (
     <>

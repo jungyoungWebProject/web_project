@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import * as C from "../../components/index";
-import { getDoc, doc } from "firebase/firestore";
+import { getDocs, collection, DocumentData } from "firebase/firestore";
 import { database } from "../../firebase";
 import { useEffect, useState } from "react";
 
 export default function PostSection() {
-  const [posts, setPosts] = useState<object>();
+  const [posts, setPosts] = useState<DocumentData[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const postDoc = await getDoc(doc(database, "post/"));
-      setPosts(postDoc.data() as object);
+      const postsRef = await getDocs(collection(database, "post/"));
+      const postData = postsRef.docs.map((doc) => doc.data());
+      setPosts(postData);
+      console.log(postData);
     };
 
     fetchPosts();
@@ -18,10 +20,9 @@ export default function PostSection() {
 
   return (
     <Container>
-      {posts &&
-        Object.entries(posts).map(([postId, postData]) => (
-          <C.Post key={postId}>{postData}</C.Post>
-        ))}
+      {posts.map((postData, postIndex) => (
+        <C.Post key={postIndex} postData={postData}></C.Post>
+      ))}
     </Container>
   );
 }

@@ -12,7 +12,6 @@ import { useEffect } from "react";
 
 export default function Post() {
   const theme = useRecoilValue(mood);
-  const [postData, setPostData] = useRecoilState(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [data, setData] = useRecoilState(loginData);
 
@@ -24,7 +23,6 @@ export default function Post() {
         if (result?.user) {
           // 사용자 정보 확인
           setData(result);
-          console.log("연동성공");
           window.location.reload();
         } else {
           console.log("연동실패");
