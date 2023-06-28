@@ -64,13 +64,13 @@ export const showPublishPage = atom<boolean>({
 export const postData = atom({
   key: `postData${v1()}`,
   default: {
-    id: 0,
+    id: v1(),
     user: "",
     title: "",
     summary: "",
     paragraph: "",
     mainimgurl: "",
-    date: "",
+    date: new Date(),
     postUrl: "",
     public: true,
   },

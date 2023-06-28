@@ -9,6 +9,9 @@ import {
 } from "state/index";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { database } from "../../firebase";
+import { Link } from "react-router-dom";
 
 export default function PostSection() {
   const theme = useRecoilValue(mood);
@@ -110,9 +113,32 @@ export default function PostSection() {
                 >
                   취소
                 </EditBtn>
-                <EditBtn mood={theme} usage="publish">
-                  출간하기
-                </EditBtn>
+                <Link
+                  to={`/@${LoginData?.user.email?.slice(
+                    0,
+                    LoginData?.user.email?.indexOf("@")
+                  )}`}
+                >
+                  <EditBtn
+                    mood={theme}
+                    usage="publish"
+                    onClick={() => {
+                      let date = new Date();
+
+                      setPostData((prevData) => ({
+                        ...prevData,
+                        user: LoginData?.user.email || "",
+                        date: date,
+                      }));
+
+                      addDoc(collection(database, "post"), {
+                        PostData,
+                      });
+                    }}
+                  >
+                    출간하기
+                  </EditBtn>
+                </Link>
               </GroupSettingPart>
             </PublicSetting>
           </SettingArea>
