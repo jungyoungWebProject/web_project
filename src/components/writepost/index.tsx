@@ -4,11 +4,16 @@ import { mood, themeType, markdownText, showPublishPage } from "state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function PublishPost() {
   const theme = useRecoilValue(mood);
   const [writedText, setWritedText] = useRecoilState(markdownText);
   const [showPublish, setShowPublish] = useRecoilState(showPublishPage);
+
+  useEffect(() => {
+    setWritedText({ ...writedText, title: "", paragraph: "" });
+  }, []);
 
   return (
     <Container mood={theme}>
@@ -307,7 +312,7 @@ const MarkDownView = styled.div<{ mood: themeType }>`
   height: 100%;
 
   box-sizing: border-box;
-  padding: 48px 0px 0px 0px;
+  padding: 48px 0px 0px 48px;
 
   background-color: ${(props) => C[props.mood].LineColor1};
 
@@ -315,7 +320,7 @@ const MarkDownView = styled.div<{ mood: themeType }>`
   font-family: "Fira Code";
   word-spacing: -0.25rem;
 
-  background-color: ${(props) => C[props.mood].BgColor};
+  background-color: ${(props) => C[props.mood].LineColor1};
   color: ${(props) => C[props.mood].TextColor1};
 `;
 

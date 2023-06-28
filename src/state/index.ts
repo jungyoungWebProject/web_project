@@ -60,3 +60,14 @@ export const showPublishPage = atom<boolean>({
   key: "showPublishPage",
   default: false,
 });
+
+export const postData = atom({
+  key: "postData",
+  default: {
+    user: "",
+    title: "",
+    summary: "",
+    mainimgurl: "",
+    date: "",
+  }
+})
