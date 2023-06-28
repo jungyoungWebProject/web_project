@@ -44,7 +44,7 @@ export const showLoginPopup = atom<boolean>({
 });
 
 export const markdownText = atom({
-  key: "markdown",
+  key: `markdown${v1()}`,
   default: {
     title: "",
     paragraph: "",
@@ -52,22 +52,26 @@ export const markdownText = atom({
 });
 
 export const showQuickMenu = atom<boolean>({
-  key: "showQuickMenu",
+  key: `showQuickMenu${v1()}`,
   default: false,
 });
 
 export const showPublishPage = atom<boolean>({
-  key: "showPublishPage",
+  key: `showPublishPage${v1()}`,
   default: false,
 });
 
 export const postData = atom({
-  key: "postData",
+  key: `postData${v1()}`,
   default: {
+    id: 0,
     user: "",
     title: "",
     summary: "",
+    paragraph: "",
     mainimgurl: "",
     date: "",
-  }
-})
+    postUrl: "",
+    public: true,
+  },
+});

@@ -1,15 +1,25 @@
 import styled from "styled-components";
 import * as C from "../../style/index";
-import { mood, themeType, markdownText, showPublishPage } from "state";
+import {
+  mood,
+  themeType,
+  markdownText,
+  showPublishPage,
+  postData,
+} from "state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { addDoc, doc } from "firebase/firestore";
 
 export default function PublishPost() {
   const theme = useRecoilValue(mood);
   const [writedText, setWritedText] = useRecoilState(markdownText);
   const [showPublish, setShowPublish] = useRecoilState(showPublishPage);
+  const [PostData, setPostData] = useRecoilState(postData);
+
+  function generatePost() {}
 
   useEffect(() => {
     setWritedText({ ...writedText, title: "", paragraph: "" });
@@ -27,6 +37,10 @@ export default function PublishPost() {
                 ...writedText,
                 title: "# " + e.target.value + "\r\n",
               });
+              setPostData((prevPost) => ({
+                ...prevPost,
+                title: e.target.value,
+              }));
             }}
           />
           <DivideLine mood={theme} />
@@ -41,6 +55,10 @@ export default function PublishPost() {
               ...writedText,
               paragraph: e.target.value,
             });
+            setPostData((prevPost)=> ({
+              ...prevPost,
+              paragraph: e.target.value,
+            }))
           }}
         />
         <Editbar mood={theme}>
@@ -145,7 +163,7 @@ const DivideLine = styled.div<{ mood: themeType }>`
   background-color: ${(props) => C[props.mood].LineColor2};
 `;
 
-const WTag = styled.textarea<{ mood: themeType }>`
+const WTag = styled.input<{ mood: themeType }>`
   width: 100%;
   height: min-content;
 
@@ -181,8 +199,6 @@ const MarkDownButtonArea = styled.div`
   box-sizing: border-box;
   padding: 0px 48px;
   margin: 0px 0px 16px 0px;
-
-  border: 1px solid gray;
 `;
 
 const MarkDownTextArea = styled.textarea<{ mood: themeType }>`

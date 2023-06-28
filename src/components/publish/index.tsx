@@ -34,6 +34,12 @@ export default function PostSection() {
               <IntroduceText
                 mood={theme}
                 placeholder="당신의 포스트를 짧게 소개해보세요."
+                onChange={(e) => {
+                  setPostData((prevPost) => ({
+                    ...prevPost,
+                    summary: e.target.value,
+                  }));
+                }}
               />
             </PreViewContents>
           </PreViewArea>
@@ -46,6 +52,10 @@ export default function PostSection() {
                   selected={isBtnSelected}
                   onClick={() => {
                     setIsBtnSelected(true);
+                    setPostData((prevData) => ({
+                      ...prevData,
+                      public: true,
+                    }));
                   }}
                 >
                   전체 공개
@@ -55,6 +65,10 @@ export default function PostSection() {
                   selected={!isBtnSelected}
                   onClick={() => {
                     setIsBtnSelected(false);
+                    setPostData((prevData) => ({
+                      ...prevData,
+                      public: false,
+                    }));
                   }}
                 >
                   비공개
@@ -71,12 +85,34 @@ export default function PostSection() {
                     )}
                     /
                   </div>
-                  <URLInput mood={theme} />
+                  <URLInput
+                    mood={theme}
+                    onChange={(e) => {
+                      setPostData((prevData) => ({
+                        ...prevData,
+                        postUrl: e.target.value,
+                      }));
+                    }}
+                  />
                 </BaseURL>
               </GroupSettingPart>
               <h2>시리즈 설정</h2>
               <GroupSettingPart>
                 <SeriesBar mood={theme}>시리즈에 추가하기</SeriesBar>
+              </GroupSettingPart>
+              <GroupSettingPart style={{ marginTop: "3rem" }}>
+                <EditBtn
+                  mood={theme}
+                  usage="cancel"
+                  onClick={() => {
+                    setShowPublish(false);
+                  }}
+                >
+                  취소
+                </EditBtn>
+                <EditBtn mood={theme} usage="publish">
+                  출간하기
+                </EditBtn>
               </GroupSettingPart>
             </PublicSetting>
           </SettingArea>
@@ -190,6 +226,10 @@ const SettingArea = styled.div<{ mood: themeType }>`
   font-weight: 600;
 
   color: ${(props) => C[props.mood].TextColor1};
+
+  h2 {
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const PublicSetting = styled.div`
@@ -201,10 +241,11 @@ const PublicSetting = styled.div`
 `;
 
 const GroupSettingPart = styled.div`
-  width: min-content;
+  width: 100%;
   height: min-content;
 
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
 `;
 
@@ -267,7 +308,7 @@ const URLInput = styled.input<{ mood: themeType }>`
   font-family: "";
   font-weight: 400;
 
-  color: ${(props) => C[props.mood].TextColor2};
+  color: ${(props) => C[props.mood].TextColor1};
   background-color: ${(props) => C[props.mood].LineColor1};
 `;
 
@@ -290,4 +331,38 @@ const SeriesBar = styled.div<{ mood: themeType }>`
 
   display: flex;
   align-items: center;
+
+  cursor: pointer;
+`;
+
+const EditBtn = styled.div<{ mood: themeType; usage: string }>`
+  width: 114px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0.25rem;
+
+  background-color: ${(props) =>
+    props.usage === "publish"
+      ? C[props.mood].BtnColor2
+      : C[props.mood].LineColor2};
+  color: ${(props) =>
+    props.usage === "publish"
+      ? C[props.mood].BgColor
+      : C[props.mood].BtnColor2};
+
+  font-size: 1.125rem;
+  font-family: "Fira Code";
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) =>
+      props.usage === "publish"
+        ? C[props.mood].TextColor1
+        : C[props.mood].LineColor1};
+  }
 `;

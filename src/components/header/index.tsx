@@ -17,6 +17,7 @@ export default function Header() {
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [theme, setTheme] = useRecoilState(mood);
   const [ShowQuickMenu, setShowQuickMenu] = useRecoilState(showQuickMenu);
+  const LoginData = useRecoilValue(loginData);
 
   async function SignOut() {
     await signOut(auth)
@@ -69,9 +70,16 @@ export default function Header() {
                 >
                   {ShowQuickMenu && (
                     <QuickMenu>
-                      <QuickMenuElement mood={theme}>
-                        내 벨로그
-                      </QuickMenuElement>
+                      <Link
+                        to={`/@${LoginData?.user.email?.slice(
+                          0,
+                          LoginData?.user.email?.indexOf("@")
+                        )}`}
+                      >
+                        <QuickMenuElement mood={theme}>
+                          내 벨로그
+                        </QuickMenuElement>
+                      </Link>
                       <QuickMenuElement mood={theme}>임시 글</QuickMenuElement>
                       <QuickMenuElement mood={theme}>
                         읽기 목록
