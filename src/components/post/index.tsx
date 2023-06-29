@@ -10,9 +10,17 @@ export default function Post(props: DocumentData) {
   const Pdata = props.postData.PostData;
   const LoginData = useRecoilValue(loginData);
 
+  console.log(
+    `/post/@${
+      Pdata.postUrl ===
+      `${LoginData?.user.email?.slice(0, LoginData?.user.email?.indexOf("@"))}/`
+        ? Pdata.postUrl + Pdata.title
+        : Pdata.postUrl
+    }`.replace(" ", "-")
+  );
   return (
     <Link
-      to={`/post/@${
+      to={`/@${
         Pdata.postUrl ===
         `${LoginData?.user.email?.slice(
           0,
@@ -20,7 +28,7 @@ export default function Post(props: DocumentData) {
         )}/`
           ? Pdata.postUrl + Pdata.title
           : Pdata.postUrl
-      }`}
+      }`.replace(" ", "-")}
     >
       <Container mood={theme}>
         <ImgSection background={`${Pdata.mainimgurl}`}></ImgSection>

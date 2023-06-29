@@ -32,25 +32,19 @@ export default function App() {
           <Route path="/" element={<P.MainPage />}></Route>
           <Route path="/recent" element={<P.MainPage />}></Route>
           <Route path="/write" element={<P.WritingPage />}></Route>
-          <Route
-            path={`/@${LoginData?.user.email?.slice(
-              0,
-              LoginData?.user.email?.indexOf("@")
-            )}`}
-            element={<P.ShowPost></P.ShowPost>}
-          ></Route>
+
           {posts.map((postData, postIndex) => (
             <Route
               key={postIndex}
-              path={`/post/@${
-                postData.postUrl ===
+              path={`/@${
+                postData.PostData.postUrl ===
                 `${LoginData?.user.email?.slice(
                   0,
                   LoginData?.user.email?.indexOf("@")
                 )}/`
-                  ? postData.postUrl + postData.title
-                  : postData.postUrl
-              }`}
+                  ? postData.PostData.postUrl + postData.PostData.title
+                  : postData.PostData.postUrl
+              }`.replace(" ", "-")}
               element={<P.ShowPost data={postData}></P.ShowPost>}
             ></Route>
           ))}

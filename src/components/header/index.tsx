@@ -11,8 +11,9 @@ import * as C from "style";
 import { User, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
+import { DocumentData } from "firebase/firestore";
 
-export default function Header() {
+export default function (props: DocumentData) {
   const LoginData = useRecoilValue(loginData);
   const [ShowLoginPopup, setShowLoginPopup] = useRecoilState(showLoginPopup);
   const [theme, setTheme] = useRecoilState(mood);
@@ -33,9 +34,18 @@ export default function Header() {
   return (
     <>
       <Container mood={theme}>
+        {Object.keys(props).length === 0 ? (
+          <Link to="/">
+            <HeaderContainerTitle mood={theme}>velog</HeaderContainerTitle>
+          </Link>
+        ) : (
+          <Link to={`/@${props.post.PostData.wuser}`}>
+            <HeaderContainerTitle mood={theme}>
+              {props.post.PostData.wuser}.log
+            </HeaderContainerTitle>
+          </Link>
+        )}
         <HeaderContainer>
-          <HeaderContainerTitle mood={theme}>velog</HeaderContainerTitle>
-
           <HeaderContainerOptions>
             <ThemeBtn
               mood={theme}
@@ -117,6 +127,8 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 64px;
 
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -137,6 +149,9 @@ const HeaderContainerTitle = styled.div<{ mood: themeType }>`
 const HeaderContainerOptions = styled.div`
   width: min-content;
   height: min-content;
+  position: absolute;
+
+  right: 0%;
 
   display: flex;
   align-items: center;
@@ -192,7 +207,6 @@ const LoginBtn = styled.div<{ mood: themeType }>`
   font-size: 1rem;
   font-weight: 600;
 
-  border: 1px solid ${(props) => C[props.mood].TextColor1};
   color: ${(props) => C[props.mood].TextColor1};
 
   justify-content: center;

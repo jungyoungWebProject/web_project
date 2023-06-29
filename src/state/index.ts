@@ -73,6 +73,5 @@ export const postData = atom({
     date: "",
     postUrl: "",
     public: true,
-    markdown: "",
   },
 });

@@ -43,7 +43,6 @@ export default function PostSection() {
       date: "",
       postUrl: "",
       public: true,
-      markdown: ""
     });
   }
 
@@ -172,10 +171,15 @@ export default function PostSection() {
                   취소
                 </EditBtn>
                 <Link
-                  to={`/@${LoginData?.user.email?.slice(
-                    0,
-                    LoginData?.user.email?.indexOf("@")
-                  )}`}
+                  to={`/@${
+                    PostData.postUrl ===
+                    `${LoginData?.user.email?.slice(
+                      0,
+                      LoginData?.user.email?.indexOf("@")
+                    )}/`
+                      ? PostData.postUrl + PostData.title
+                      : PostData.postUrl
+                  }`.replace(" ", "-")}
                 >
                   <EditBtn
                     mood={theme}
