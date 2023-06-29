@@ -4,10 +4,26 @@ import { useRecoilValue } from "recoil";
 import { loginData, mood, themeType } from "state/index";
 import styled from "styled-components";
 import * as S from "style";
+import { useEffect, useState } from "react";
+
+import { getDocs, collection, DocumentData } from "firebase/firestore";
+import { database } from "./firebase";
 
 export default function App() {
   const theme = useRecoilValue(mood);
   const LoginData = useRecoilValue(loginData);
+  const [posts, setPosts] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const postsRef = await getDocs(collection(database, "post/"));
+      const postData = postsRef.docs.map((doc) => doc.data());
+      setPosts(postData);
+      console.log(postData);
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <Body mood={theme}>
@@ -23,6 +39,21 @@ export default function App() {
             )}`}
             element={<P.ShowPost></P.ShowPost>}
           ></Route>
+          {posts.map((postData, postIndex) => (
+            <Route
+              key={postIndex}
+              path={`/post/@${
+                postData.postUrl ===
+                `${LoginData?.user.email?.slice(
+                  0,
+                  LoginData?.user.email?.indexOf("@")
+                )}/`
+                  ? postData.postUrl + postData.title
+                  : postData.postUrl
+              }`}
+              element={<P.ShowPost data={postData}></P.ShowPost>}
+            ></Route>
+          ))}
         </Routes>
       </BrowserRouter>
     </Body>

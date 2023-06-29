@@ -1,24 +1,12 @@
 import styled from "styled-components";
 import * as C from "../../style/index";
-import {
-  mood,
-  themeType,
-  markdownText,
-  showPublishPage,
-  postData,
-} from "../../state";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { mood, themeType } from "../../state";
+import { useRecoilValue } from "recoil";
 
 export default function PublishPost() {
   const theme = useRecoilValue(mood);
-  const [writedText, setWritedText] = useRecoilState(markdownText);
-  const [showPublish, setShowPublish] = useRecoilState(showPublishPage);
-  const [PostData, setPostData] = useRecoilState(postData);
 
-  return <Container mood={theme}>
-    
-  </Container>;
+  return <Container mood={theme}></Container>;
 }
 
 const Container = styled.div<{ mood: themeType }>`

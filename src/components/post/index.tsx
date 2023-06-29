@@ -1,4 +1,4 @@
-import { mood, themeType } from "state/index";
+import { mood, themeType, loginData } from "state/index";
 import { useRecoilValue } from "recoil";
 import * as C from "style";
 import styled from "styled-components";
@@ -8,11 +8,20 @@ import { DocumentData } from "firebase/firestore";
 export default function Post(props: DocumentData) {
   const theme = useRecoilValue(mood);
   const Pdata = props.postData.PostData;
-
-  console.log(Pdata.id);
+  const LoginData = useRecoilValue(loginData);
 
   return (
-    <Link to={`/post/${Pdata.postUrl}`}>
+    <Link
+      to={`/post/@${
+        Pdata.postUrl ===
+        `${LoginData?.user.email?.slice(
+          0,
+          LoginData?.user.email?.indexOf("@")
+        )}/`
+          ? Pdata.postUrl + Pdata.title
+          : Pdata.postUrl
+      }`}
+    >
       <Container mood={theme}>
         <ImgSection background={`${Pdata.mainimgurl}`}></ImgSection>
         <ParagraphSection>

@@ -12,7 +12,6 @@ export default function PostSection() {
       const postsRef = await getDocs(collection(database, "post/"));
       const postData = postsRef.docs.map((doc) => doc.data());
       setPosts(postData);
-      console.log(postData);
     };
 
     fetchPosts();
