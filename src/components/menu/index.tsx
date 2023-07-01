@@ -50,7 +50,7 @@ export default function Menu() {
 
           <SelectedLine mood={theme} selected={selectedOption} />
         </GroupOptions>
-        <SelectionTag mood={theme}>wef</SelectionTag>
+        <SelectionTag mood={theme}></SelectionTag>
       </TopMenu>
     </Container>
   );

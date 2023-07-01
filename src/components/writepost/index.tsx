@@ -29,7 +29,7 @@ export default function PublishPost() {
           <WTitle
             mood={theme}
             placeholder="제목을 입력하세요"
-            onChange={(e) => {
+            onChange={(e: any) => {
               setWritedText({
                 ...writedText,
                 title: "# " + e.target.value + "\r\n",
@@ -47,15 +47,15 @@ export default function PublishPost() {
         <MarkDownTextArea
           mood={theme}
           placeholder="당신의 이야기를 적어보세요..."
-          onChange={(e) => {
+          onChange={(e: any) => {
             setWritedText({
               ...writedText,
               paragraph: e.target.value,
             });
-            setPostData((prevPost)=> ({
+            setPostData((prevPost) => ({
               ...prevPost,
               paragraph: e.target.value,
-            }))
+            }));
           }}
         />
         <Editbar mood={theme}>

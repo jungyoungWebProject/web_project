@@ -90,7 +90,7 @@ export default function PostSection() {
               <IntroduceText
                 mood={theme}
                 placeholder="당신의 포스트를 짧게 소개해보세요."
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setPostData((prevPost) => ({
                     ...prevPost,
                     summary: e.target.value,
@@ -143,7 +143,7 @@ export default function PostSection() {
                   </div>
                   <URLInput
                     mood={theme}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       setPostData((prevData) => ({
                         ...prevData,
                         postUrl:
@@ -170,17 +170,7 @@ export default function PostSection() {
                 >
                   취소
                 </EditBtn>
-                <Link
-                  to={`/@${
-                    PostData.postUrl ===
-                    `${LoginData?.user.email?.slice(
-                      0,
-                      LoginData?.user.email?.indexOf("@")
-                    )}/`
-                      ? PostData.postUrl + PostData.title
-                      : PostData.postUrl
-                  }`.replace(" ", "-")}
-                >
+                <Link to={`/`}>
                   <EditBtn
                     mood={theme}
                     usage="publish"
@@ -188,6 +178,7 @@ export default function PostSection() {
                       addDoc(collection(database, "post"), {
                         PostData,
                       });
+
                       resetData();
                     }}
                   >
