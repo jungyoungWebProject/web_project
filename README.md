@@ -1,3 +1,3 @@
-## ~05/19 Web Programming task
+## ~05/19 부터 시작한 웹프로그래밍 과제!
 
-## velog CloneCoding
+## 상은타지 못했지만 좋은 경험~
